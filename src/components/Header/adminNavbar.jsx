@@ -21,7 +21,7 @@ const AdminNavbar = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
-   window.location.href = "/";
+  window.location.replace("/");
   };
 
   const isActive = (path) => location.pathname === path;

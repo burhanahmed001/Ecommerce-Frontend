@@ -29,7 +29,7 @@ const AdminDashboard = () => {
       
      
       if (!token) {
-        window.location.href = "/";
+      window.location.replace("/");
         return;
       }
 
