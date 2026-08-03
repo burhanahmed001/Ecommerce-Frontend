@@ -1,11 +1,11 @@
 import React from 'react'
-import CopyRIGHT from './CopyRIGHT'
+import CopyRight from './CopyRight'
 
 const Footer = () => {
   return (
     <>
       
-      <CopyRIGHT />
+      <CopyRight />
     </>
   )
 }
