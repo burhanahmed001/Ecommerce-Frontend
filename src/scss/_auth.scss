@@ -1,0 +1,91 @@
+// Auth Variables
+$primary-color: #4f46e5;      
+$primary-hover: #4338ca;     
+$bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+$card-bg: #ffffff;
+$text-dark: #1e293b;
+$border-color: #cbd5e1;
+
+.auth {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $bg-gradient;
+  padding: 16px;
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+    background: $card-bg;
+    border-radius: 16px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    padding: 24px !important;
+
+    h2.ant-typography {
+      color: $text-dark;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      text-align: center !important;
+      margin-bottom: 16px !important;
+    }
+
+    // Ant Design Form item margins fix
+    .ant-form-item {
+      margin-bottom: 12px !important;
+    }
+
+    .ant-form-item-label {
+      padding-bottom: 4px !important;
+      > label {
+        color: #475569;
+        font-weight: 600;
+        font-size: 14px;
+      }
+    }
+
+    .ant-input,
+    .ant-input-affix-wrapper {
+      border-radius: 8px;
+      border-color: $border-color;
+      padding-top: 8px;
+      padding-bottom: 8px;
+
+      &:hover,
+      &:focus,
+      &-focused {
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+      }
+    }
+
+    .btn-submit {
+      background-color: $primary-color;
+      border-color: $primary-color;
+      height: 42px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      margin-top: 6px;
+      transition: all 0.2s ease-in-out;
+
+      &:hover,
+      &:focus {
+        background-color: $primary-hover !important;
+        border-color: $primary-hover !important;
+      }
+    }
+
+    .auth-link {
+      color: $primary-color;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        color: $primary-hover;
+        text-decoration: underline;
+      }
+    }
+  }
+}
