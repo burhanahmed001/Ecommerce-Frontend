@@ -21,70 +21,86 @@ const AdminDashboard = () => {
     totalRevenue: 0
   });
 
-  useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        setLoading(true);
-        const token = localStorage.getItem("token");
-        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
-
-        // Products, Admin Orders, aur Database Users ko parallel fetch karein
-        const [productsRes, ordersRes, usersRes] = await Promise.allSettled([
-          axios.get(`${import.meta.env.VITE_API_URL}/products`, { headers }),
-          axios.get(`${import.meta.env.VITE_API_URL}/orders/admin/all`, { headers }),
-          axios.get(`${import.meta.env.VITE_API_URL}/users`, { headers })
-        ]);
-
-        let productsCount = 0;
-        let ordersCount = 0;
-        let usersCount = 0;
-        let revenueTotal = 0;
-
-        if (productsRes.status === 'fulfilled') {
-          const prodData = productsRes.value.data;
-          const productsArray = Array.isArray(prodData) ? prodData : prodData.products || [];
-          productsCount = productsArray.length;
-        }
-
-        if (ordersRes.status === 'fulfilled') {
-          const ordData = ordersRes.value.data;
-          const ordersArray = Array.isArray(ordData) ? ordData : ordData.orders || [];
-          ordersCount = ordersArray.length;
-          
-          // Sirf Delivered orders ka amount revenue mein jurega
-          revenueTotal = ordersArray
-            .filter(order => order.status && order.status.toLowerCase() === 'delivered')
-            .reduce((acc, order) => acc + (order.totalAmount || 0), 0);
-        }
-
-        if (usersRes.status === 'fulfilled') {
-          const userData = usersRes.value.data;
-          const usersArray = Array.isArray(userData) ? userData : userData.users || [];
-          usersCount = usersArray.length;
-        }
-
-        setStats({
-          totalProducts: productsCount,
-          totalOrders: ordersCount,
-          totalUsers: usersCount,
-          totalRevenue: revenueTotal
-        });
-
-      } catch (error) {
-        console.error("Error loading dashboard stats:", error);
-        setStats({
-          totalProducts: 0,
-          totalOrders: 0,
-          totalUsers: 0,
-          totalRevenue: 0
-        });
-      } finally {
-        setLoading(false);
+ useEffect(() => {
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      
+     
+      if (!token) {
+        window.location.href = "/";
+        return;
       }
-    };
 
-    fetchDashboardData();
-  }, []);
+      const headers = { 'Authorization': `Bearer ${token}` };
+
+     
+      const [productsRes, ordersRes, usersRes] = await Promise.allSettled([
+        axios.get(`${import.meta.env.VITE_API_URL}/products`, { headers }),
+        axios.get(`${import.meta.env.VITE_API_URL}/orders/admin/all`, { headers }),
+        axios.get(`${import.meta.env.VITE_API_URL}/users`, { headers })
+      ]);
+
+      let productsCount = 0;
+      let ordersCount = 0;
+      let usersCount = 0;
+      let revenueTotal = 0;
+
+      if (productsRes.status === 'fulfilled') {
+        const prodData = productsRes.value.data;
+        const productsArray = Array.isArray(prodData) ? prodData : prodData.products || [];
+        productsCount = productsArray.length;
+      }
+
+      if (ordersRes.status === 'fulfilled') {
+        const ordData = ordersRes.value.data;
+        const ordersArray = Array.isArray(ordData) ? ordData : ordData.orders || [];
+        ordersCount = ordersArray.length;
+        
+        
+        revenueTotal = ordersArray
+          .filter(order => order.status && order.status.toLowerCase() === 'delivered')
+          .reduce((acc, order) => acc + (order.totalAmount || 0), 0);
+      }
+
+      if (usersRes.status === 'fulfilled') {
+        const userData = usersRes.value.data;
+        const usersArray = Array.isArray(userData) ? userData : userData.users || [];
+        usersCount = usersArray.length;
+      }
+
+      setStats({
+        totalProducts: productsCount,
+        totalOrders: ordersCount,
+        totalUsers: usersCount,
+        totalRevenue: revenueTotal
+      });
+
+    } catch (error) {
+      console.error("Error loading dashboard stats:", error);
+      
+     
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "/";
+        return;
+      }
+
+      setStats({
+        totalProducts: 0,
+        totalOrders: 0,
+        totalUsers: 0,
+        totalRevenue: 0
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchDashboardData();
+}, []);
 
   return (
     <AdminLayout>

@@ -20,7 +20,7 @@ function Navbar() {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     setUser(null);
-    navigate('/');
+ window.location.href = "/";
   };
 
   return (
