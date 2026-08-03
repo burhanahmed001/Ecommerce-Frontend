@@ -67,7 +67,6 @@ function ProductDetails() {
         alert("Product added to cart successfully!");
       }
 
-      // Stock ko foran UI par minus karne ke liye
       setProduct(prev => ({ 
         ...prev, 
         stock: availableStock - Number(quantity),
@@ -104,11 +103,13 @@ function ProductDetails() {
         ) : (
           <div className="row g-5 align-items-center">
             <div className="col-lg-6">
-              <div className="card border-0 shadow-lg rounded-4 overflow-hidden bg-light" style={{ height: '400px' }}>
+             
+              <div className="card border-0 shadow-lg rounded-4 overflow-hidden bg-white d-flex align-items-center justify-content-center p-3" style={{ minHeight: '400px' }}>
                 <img 
                   src={product.imageUrl || product.image} 
                   alt={product.name} 
-                  className="w-100 h-100 object-fit-cover"
+                  className="w-100 h-100 object-fit-contain"
+                  style={{ maxHeight: '400px' }}
                 />
               </div>
             </div>
@@ -118,7 +119,7 @@ function ProductDetails() {
                 <span className="badge bg-dark text-white px-3 py-1.5 rounded-pill fw-bold">
                   {product.category || 'General'}
                 </span>
-                {/* Stock Badge */}
+              
                 <span className={`badge border px-3 py-1.5 rounded-pill fw-bold ${availableStock > 0 ? 'bg-light text-success' : 'bg-light text-danger'}`}>
                   {availableStock > 0 ? `Stock Available: ${availableStock}` : 'Currently Out of Stock'}
                 </span>
@@ -132,7 +133,7 @@ function ProductDetails() {
                 {product.description}
               </p>
 
-              {/* Quantity Selector Section */}
+           
               <div className="mb-4 d-flex align-items-center gap-3">
                 <label htmlFor="quantity" className="fw-semibold text-dark">Quantity:</label>
                 <input 
