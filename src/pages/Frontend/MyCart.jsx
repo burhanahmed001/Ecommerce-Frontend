@@ -8,7 +8,7 @@ function MyCart() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   
-  // Checkout Form State (Backend Schema ke mutabiq)
+  
   const [shippingData, setShippingData] = useState({
     fullName: '',
     email: '',
@@ -16,7 +16,8 @@ function MyCart() {
     address: '',
     city: 'Faisalabad',
     postalCode: '',
-    orderNotes: ''
+    orderNotes: '',
+    paymentMethod: 'Cash on Delivery' 
   });
 
   const navigate = useNavigate();
@@ -53,7 +54,8 @@ function MyCart() {
         address: user.address || '',
         city: user.city || 'Faisalabad',
         postalCode: user.postalCode || '',
-        orderNotes: ''
+        orderNotes: '',
+        paymentMethod: 'Cash on Delivery'
       });
 
       setLoading(false);
@@ -120,25 +122,24 @@ function MyCart() {
         quantity: item.quantity || 1
       }));
 
-      // 1. Order create request with complete shipping details
+      // Backend ko paymentMethod aur shippingData bhejna
       await axios.post(
         `${import.meta.env.VITE_API_URL}/orders`,
         {
           orderItems,
           shippingAddress: shippingData,
-          totalAmount: grandTotal
+          totalAmount: grandTotal,
+          paymentMethod: shippingData.paymentMethod
         },
         {
           headers: { Authorization: `Bearer ${token}` }
         }
       );
 
-      // 2. Clear backend cart from database
       await axios.delete(`${import.meta.env.VITE_API_URL}/cart`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      // 3. Clear frontend state & local storage
       setCartItems([]);
       localStorage.removeItem('cart');
       setShowModal(false);
@@ -284,18 +285,17 @@ function MyCart() {
         </div>
       </div>
 
-      {/* Checkout Shipping Details Modal */}
       {showModal && (
         <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.6)' }}>
           <div className="modal-dialog modal-dialog-centered modal-lg">
             <div className="modal-content border-0 rounded-4 shadow-lg p-3">
               <div className="modal-header border-0 pb-0">
-                <h4 className="fw-bold text-dark">Shipping Information 📍</h4>
+                <h4 className="fw-bold text-dark">Shipping & Payment Info 📍</h4>
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
               </div>
               <form onSubmit={handlePlaceOrder}>
                 <div className="modal-body">
-                  <p className="text-muted small mb-4">Please confirm your delivery address and contact details before placing the order.</p>
+                  <p className="text-muted small mb-4">Please confirm your delivery address, contact details, and payment method before placing the order.</p>
                   
                   <div className="row g-3">
                     <div className="col-md-6">
@@ -373,6 +373,23 @@ function MyCart() {
                     </div>
 
                     <div className="col-md-6">
+                      <label className="form-label fw-semibold small">Payment Method *</label>
+                      <select 
+                        className="form-select rounded-3" 
+                        name="paymentMethod" 
+                        value={shippingData.paymentMethod} 
+                        onChange={handleInputChange}
+                        required
+                      >
+                        <option value="Cash on Delivery">Cash on Delivery (COD)</option>
+                        <option value="Online Payment">Online Payment</option>
+                        <option value="JazzCash">JazzCash</option>
+                        <option value="EasyPaisa">EasyPaisa</option>
+                        <option value="Stripe">Stripe</option>
+                      </select>
+                    </div>
+
+                    <div className="col-12">
                       <label className="form-label fw-semibold small">Order Notes (Optional)</label>
                       <input 
                         type="text" 
