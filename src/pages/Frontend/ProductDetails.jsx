@@ -104,12 +104,12 @@ function ProductDetails() {
           <div className="row g-5 align-items-center">
             <div className="col-lg-6">
              
-              <div className="card border-0 shadow-lg rounded-4 overflow-hidden bg-white d-flex align-items-center justify-content-center p-3" style={{ minHeight: '400px' }}>
+              <div className="card border-0 shadow-lg rounded-4 overflow-hidden bg-white" style={{ height: '350px', maxHeight: '450px' }}>
                 <img 
                   src={product.imageUrl || product.image} 
                   alt={product.name} 
-                  className="w-100 h-100 object-fit-contain"
-                  style={{ maxHeight: '400px' }}
+                  className="w-100 h-100"
+                  style={{ objectFit: 'cover', objectPosition: 'center' }}
                 />
               </div>
             </div>
@@ -119,7 +119,7 @@ function ProductDetails() {
                 <span className="badge bg-dark text-white px-3 py-1.5 rounded-pill fw-bold">
                   {product.category || 'General'}
                 </span>
-              
+                
                 <span className={`badge border px-3 py-1.5 rounded-pill fw-bold ${availableStock > 0 ? 'bg-light text-success' : 'bg-light text-danger'}`}>
                   {availableStock > 0 ? `Stock Available: ${availableStock}` : 'Currently Out of Stock'}
                 </span>
@@ -133,7 +133,6 @@ function ProductDetails() {
                 {product.description}
               </p>
 
-           
               <div className="mb-4 d-flex align-items-center gap-3">
                 <label htmlFor="quantity" className="fw-semibold text-dark">Quantity:</label>
                 <input 
