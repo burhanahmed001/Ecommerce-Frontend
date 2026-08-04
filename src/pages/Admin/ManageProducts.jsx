@@ -12,7 +12,7 @@ const ManageProducts = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Fetch all products from backend
+ 
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -24,7 +24,6 @@ const ManageProducts = () => {
         }
       });
 
-      // Handle array or object response structure
       const productsData = Array.isArray(response.data) ? response.data : response.data.products || [];
       setProducts(productsData);
     } catch (error) {
@@ -39,7 +38,7 @@ const ManageProducts = () => {
     fetchProducts();
   }, []);
 
-  // Delete Product Handler
+ 
   const handleDelete = (productId) => {
     Modal.confirm({
       title: 'Are you sure you want to delete this product?',
@@ -96,7 +95,7 @@ const ManageProducts = () => {
     },
     {
       title: 'Stock',
-      dataIndex: 'stockQuantity', // Fixed to match backend field name
+      dataIndex: 'stockQuantity',
       key: 'stockQuantity',
       sorter: (a, b) => (a.stockQuantity || 0) - (b.stockQuantity || 0),
       render: (stockQuantity) => {
@@ -120,7 +119,7 @@ const ManageProducts = () => {
       key: 'actions',
       align: 'center',
       render: (_, record) => (
-        <Space size="small">
+        <Space size="small" wrap>
           <Button 
             type="default" 
             icon={<EditOutlined />} 
@@ -146,28 +145,26 @@ const ManageProducts = () => {
 
   return (
     <AdminLayout>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', paddingBottom: '40px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', paddingBottom: '40px' }} className="container-fluid px-2 px-md-4">
+       
         <div style={{ 
           background: 'linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%)', 
-          padding: '25px 30px', 
+          padding: '20px', 
           borderRadius: '16px', 
           color: '#fff', 
-          marginBottom: '30px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          marginBottom: '20px',
           boxShadow: '0 10px 25px rgba(79, 70, 229, 0.15)'
-        }}>
+        }} className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
           <div>
-            <Title level={2} style={{ color: '#fff', margin: 0, display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <Title level={2} style={{ color: '#fff', margin: 0, display: 'flex', alignItems: 'center', gap: '10px', fontSize: 'clamp(1.3rem, 4vw, 2rem)' }}>
               <ShoppingOutlined /> Manage Store Products
             </Title>
-            <Text style={{ color: '#e0e7ff', fontSize: '15px' }}>
+            <Text style={{ color: '#e0e7ff', fontSize: 'clamp(13px, 2vw, 15px)' }}>
               View all inventory, update product listings, or remove items instantly.
             </Text>
           </div>
 
-          <Space>
+          <Space wrap className="w-100 w-md-auto justify-content-start justify-content-md-end">
             <Button 
               type="primary"
               icon={<PlusOutlined />}
@@ -198,8 +195,8 @@ const ManageProducts = () => {
               dataSource={products} 
               columns={columns} 
               rowKey="_id" 
-              pagination={{ pageSize: 6, showSizeChanger: false }}
-              scroll={{ x: 800 }}
+              pagination={{ pageSize: 6, showSizeChanger: false, responsive: true }}
+              scroll={{ x: 750 }}
             />
           )}
         </Card>
