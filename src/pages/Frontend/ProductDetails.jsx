@@ -27,7 +27,7 @@ function ProductDetails() {
     fetchProductDetails();
   }, [id]);
 
-  // Handle both schema keys (stock or stockQuantity) just in case
+  
   const availableStock = product?.stock !== undefined ? product.stock : (product?.stockQuantity !== undefined ? product.stockQuantity : 0);
 
   const handleAddToCart = async () => {
@@ -86,7 +86,7 @@ function ProductDetails() {
 
   return (
     <MainLayout>
-      <div className="container py-5 min-vh-100">
+      <div className="container py-4 py-md-5 min-vh-100 px-3 px-md-4">
         <Link to="/" className="btn btn-outline-dark rounded-pill px-4 mb-4 fw-semibold">
           ← Back to Home
         </Link>
@@ -101,32 +101,34 @@ function ProductDetails() {
         ) : !product ? (
           <div className="text-center py-5 text-muted fw-medium fs-5">Product not found.</div>
         ) : (
-          <div className="row g-5 align-items-center">
+          <div className="row g-4 g-lg-5 align-items-center">
+            {/* Responsive Image Section */}
             <div className="col-lg-6">
-             
-              <div className="card border-0 shadow-lg rounded-4 overflow-hidden bg-white" style={{ height: '350px', maxHeight: '450px' }}>
+              <div 
+                className="card border-0 shadow-sm rounded-4 overflow-hidden bg-white d-flex align-items-center justify-content-center p-3" 
+                style={{ minHeight: '320px', maxHeight: '480px' }}
+              >
                 <img 
                   src={product.imageUrl || product.image} 
                   alt={product.name} 
-                  className="w-100 h-100"
-                  style={{ objectFit: 'cover', objectPosition: 'center' }}
+                  className="img-fluid rounded-3 w-100"
+                  style={{ maxHeight: '420px', objectFit: 'contain' }}
                 />
               </div>
             </div>
 
             <div className="col-lg-6">
-              <div className="d-flex gap-2 mb-3">
-                <span className="badge bg-dark text-white px-3 py-1.5 rounded-pill fw-bold">
+              <div className="d-flex flex-wrap gap-2 mb-3">
+                <span className="badge bg-dark text-white px-3 py-2 rounded-pill fw-bold">
                   {product.category || 'General'}
                 </span>
-                
-                <span className={`badge border px-3 py-1.5 rounded-pill fw-bold ${availableStock > 0 ? 'bg-light text-success' : 'bg-light text-danger'}`}>
+                <span className={`badge border px-3 py-2 rounded-pill fw-bold ${availableStock > 0 ? 'bg-light text-success' : 'bg-light text-danger'}`}>
                   {availableStock > 0 ? `Stock Available: ${availableStock}` : 'Currently Out of Stock'}
                 </span>
               </div>
 
-              <h1 className="fw-bold text-dark mb-3 display-5">{product.name}</h1>
-              <h3 className="fw-bold mb-4" style={{ color: '#6366f1' }}>
+              <h1 className="fw-bold text-dark mb-3" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}>{product.name}</h1>
+              <h3 className="fw-bold mb-4" style={{ color: '#6366f1', fontSize: 'clamp(1.2rem, 2.5vw, 1.8rem)' }}>
                 Rs. {product.price}
               </h3>
               <p className="text-muted lead fs-6 mb-4" style={{ lineHeight: '1.8' }}>
@@ -151,7 +153,7 @@ function ProductDetails() {
                 <button 
                   onClick={handleAddToCart}
                   disabled={availableStock <= 0}
-                  className={`btn px-5 py-3 rounded-pill fw-bold shadow-sm ${availableStock > 0 ? 'btn-dark' : 'btn-secondary disabled'}`}
+                  className={`btn px-5 py-3 rounded-pill fw-bold shadow-sm w-100 w-md-auto ${availableStock > 0 ? 'btn-dark' : 'btn-secondary disabled'}`}
                 >
                   {availableStock > 0 ? 'Add to Cart 🛒' : 'Out of Stock'}
                 </button>
