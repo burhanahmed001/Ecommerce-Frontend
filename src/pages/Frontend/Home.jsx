@@ -35,24 +35,25 @@ function Home() {
     <MainLayout>
       <div className="min-vh-100 pb-5" style={{ backgroundColor: '#f8fafc' }}>
         
-        <section className="container py-5 text-center">
-          <div className="hero-ultra-banner p-5 rounded-5 mx-auto position-relative overflow-hidden text-white shadow-lg" style={{ maxWidth: '1000px' }}>
-            <div className="position-relative z-2 py-3">
+        {/* Responsive Hero Section */}
+        <section className="container py-3 py-md-5 text-center px-3 px-md-4">
+          <div className="hero-ultra-banner p-3 p-md-5 rounded-4 rounded-md-5 mx-auto position-relative overflow-hidden text-white shadow-lg" style={{ maxWidth: '1000px' }}>
+            <div className="position-relative z-2 py-2 py-md-3">
               
-              <span className="badge px-4 py-2 rounded-pill fw-bold mb-3 shadow-sm border-0" style={{ backgroundColor: 'rgba(255, 255, 255, 0.25)', color: '#ffffff', backdropFilter: 'blur(10px)', fontSize: '12px', letterSpacing: '1px' }}>
+              <span className="badge px-3 py-2 rounded-pill fw-bold mb-3 shadow-sm border-0" style={{ backgroundColor: 'rgba(255, 255, 255, 0.25)', color: '#ffffff', backdropFilter: 'blur(10px)', fontSize: '11px', letterSpacing: '1px' }}>
                 🔥 BURHAN STORE MEGA SALE 2026
               </span>
 
-              <h1 className="display-4 fw-bold mb-3" style={{ letterSpacing: '-1px', textShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+              <h1 className="fw-bold mb-3" style={{ fontSize: 'clamp(1.6rem, 4vw, 2.8rem)', letterSpacing: '-1px', textShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
                 Elevate Your Lifestyle With <br />
                 <span className="text-warning fw-bolder">Smart & Trendy Products</span>
               </h1>
 
-              <p className="text-white lead fs-6 mx-auto mb-4 opacity-90" style={{ maxWidth: '720px', lineHeight: '1.7' }}>
+              <p className="text-white lead fs-6 mx-auto mb-4 opacity-90" style={{ maxWidth: '720px', lineHeight: '1.6', fontSize: 'clamp(13px, 2vw, 15px)' }}>
                 Welcome to Burhan Store, your ultimate destination for high-end electronics, fashion, and everyday essentials. We bring quality right to your doorstep with guaranteed customer satisfaction.
               </p>
 
-              <div className="d-flex justify-content-center align-items-center gap-3 mb-5 flex-wrap">
+              <div className="d-flex justify-content-center align-items-center gap-3 mb-4 mb-md-5 flex-wrap">
                 <button 
                   onClick={scrollToProducts}
                   className="btn btn-light text-dark fw-bold px-4 py-2.5 rounded-pill shadow-sm explore-cta-btn"
@@ -64,23 +65,23 @@ function Home() {
                 </Link>
               </div>
 
-              <div className="row text-center border-top border-white border-opacity-25 pt-4 mt-2 g-3">
+              <div className="row text-center border-top border-white border-opacity-25 pt-3 pt-md-4 mt-2 g-2 g-md-3">
                 <div className="col-4">
                   <div className="p-2 rounded-3 bg-white bg-opacity-10 backdrop-blur">
-                    <h6 className="fw-bold mb-1 text-warning">⚡ Fast Delivery</h6>
-                    <small className="text-white-50" style={{ fontSize: '11px' }}>Quick & safe shipping</small>
+                    <h6 className="fw-bold mb-1 text-warning" style={{ fontSize: 'clamp(11px, 2vw, 14px)' }}>⚡ Fast Delivery</h6>
+                    <small className="text-white-50" style={{ fontSize: '10px' }}>Quick & safe shipping</small>
                   </div>
                 </div>
                 <div className="col-4">
                   <div className="p-2 rounded-3 bg-white bg-opacity-10 backdrop-blur">
-                    <h6 className="fw-bold mb-1 text-warning">🛡️ 100% Secure</h6>
-                    <small className="text-white-50" style={{ fontSize: '11px' }}>Trusted transactions</small>
+                    <h6 className="fw-bold mb-1 text-warning" style={{ fontSize: 'clamp(11px, 2vw, 14px)' }}>🛡️ 100% Secure</h6>
+                    <small className="text-white-50" style={{ fontSize: '10px' }}>Trusted transactions</small>
                   </div>
                 </div>
                 <div className="col-4">
                   <div className="p-2 rounded-3 bg-white bg-opacity-10 backdrop-blur">
-                    <h6 className="fw-bold mb-1 text-warning">💎 Top Quality</h6>
-                    <small className="text-white-50" style={{ fontSize: '11px' }}>Verified products</small>
+                    <h6 className="fw-bold mb-1 text-warning" style={{ fontSize: 'clamp(11px, 2vw, 14px)' }}>💎 Top Quality</h6>
+                    <small className="text-white-50" style={{ fontSize: '10px' }}>Verified products</small>
                   </div>
                 </div>
               </div>
@@ -93,7 +94,8 @@ function Home() {
           </div>
         </section>
 
-        <section id="trending-section" className="container pb-5 pt-3">
+       
+        <section id="trending-section" className="container pb-5 pt-3 px-3 px-md-4">
           <div className="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
             <h2 className="h4 fw-bold text-dark m-0 d-flex align-items-center gap-2">
               🔥 Trending Collection
@@ -111,41 +113,42 @@ function Home() {
           ) : products.length === 0 ? (
             <div className="text-center py-5 text-muted fw-medium fs-5">No products available at the moment.</div>
           ) : (
-            <div className="row g-4">
+            <div className="row g-3 g-md-4">
               {products.map((product) => (
-                <div key={product._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div key={product._id} className="col-6 col-md-4 col-lg-3">
                   <div className="card h-100 border-0 product-card d-flex flex-column justify-content-between rounded-4 overflow-hidden bg-white">
                     <div>
-                      <div className="position-relative overflow-hidden bg-light" style={{ height: '210px' }}>
+                      <div className="position-relative overflow-hidden bg-light" style={{ height: '170px' }}>
                         <img 
                           src={product.imageUrl} 
                           alt={product.name} 
                           className="w-100 h-100 object-fit-cover product-img"
                         />
-                        <span className="position-absolute top-0 end-0 m-2 badge bg-dark text-white shadow-sm px-2.5 py-1 rounded-pill small fw-bold" style={{ fontSize: '11px', letterSpacing: '0.5px' }}>
+                        <span className="position-absolute top-0 end-0 m-2 badge bg-dark text-white shadow-sm px-2.5 py-1 rounded-pill small fw-bold" style={{ fontSize: '10px', letterSpacing: '0.5px' }}>
                           {product.category}
                         </span>
                       </div>
-                      <div className="card-body p-4">
-                        <h5 className="card-title text-dark fw-bold mb-2 text-truncate fs-6">
+                      <div className="card-body p-3 p-md-4">
+                        <h5 className="card-title text-dark fw-bold mb-2 text-truncate" style={{ fontSize: 'clamp(13px, 2vw, 16px)' }}>
                           {product.name}
                         </h5>
-                        <p className="card-text text-muted small mb-0" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: '1.5' }}>
+                        <p className="card-text text-muted small mb-0" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: '1.4', fontSize: '12px' }}>
                           {product.description}
                         </p>
                       </div>
                     </div>
 
-                    <div className="card-footer bg-white border-0 p-4 pt-0 d-flex align-items-center justify-content-between mt-auto">
+                    <div className="card-footer bg-white border-0 p-3 p-md-4 pt-0 d-flex align-items-center justify-content-between mt-auto">
                       <div>
-                        <span className="text-muted d-block text-uppercase" style={{ fontSize: '10px', letterSpacing: '0.5px' }}>Price</span>
-                        <span className="fw-bold fs-6 text-indigo" style={{ color: '#6366f1' }}>
+                        <span className="text-muted d-block text-uppercase" style={{ fontSize: '9px', letterSpacing: '0.5px' }}>Price</span>
+                        <span className="fw-bold text-indigo" style={{ color: '#6366f1', fontSize: 'clamp(12px, 2vw, 15px)' }}>
                           Rs. {product.price}
                         </span>
                       </div>
                       <Link 
                         to={`/product/${product._id}`} 
-                        className="btn btn-sm px-3.5 py-2 fw-semibold rounded-pill text-white shadow-sm view-details-btn"
+                        className="btn btn-sm px-2.5 py-1.5 px-md-3.5 py-md-2 fw-semibold rounded-pill text-white shadow-sm view-details-btn"
+                        style={{ fontSize: '11px' }}
                       >
                         View Details
                       </Link>
