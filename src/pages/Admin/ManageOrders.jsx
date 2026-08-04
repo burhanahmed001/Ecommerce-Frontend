@@ -10,12 +10,11 @@ const ManageOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-const fetchOrders = async () => {
+  const fetchOrders = async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
 
-      // Yahan /orders ki jagah /orders/admin/all karein kyunki yeh admin route hai
       const response = await axios.get(`${import.meta.env.VITE_API_URL}/orders/admin/all`, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -74,7 +73,6 @@ const fetchOrders = async () => {
       title: 'Customer Details',
       key: 'customer',
       render: (_, record) => {
-        // Popup se aayi hui shipping details aur user data ko extract karna
         const name = record.shippingAddress?.fullName || record.user?.name || 'Valued Customer';
         const email = record.shippingAddress?.email || record.user?.email || '';
         const phone = record.shippingAddress?.phoneNumber || 'N/A';
@@ -139,7 +137,6 @@ const fetchOrders = async () => {
         
         return (
           <Space size="small" wrap>
-            {/* Pending se Processing karne ka button */}
             {currentStatus === 'Pending' && (
               <Button 
                 type="primary" 
@@ -151,7 +148,6 @@ const fetchOrders = async () => {
               </Button>
             )}
 
-            {/* Processing se Shipped karne ka button */}
             {currentStatus === 'Processing' && (
               <Button 
                 type="primary" 
@@ -163,7 +159,6 @@ const fetchOrders = async () => {
               </Button>
             )}
 
-            {/* Shipped se Delivered karne ka button */}
             {currentStatus === 'Shipped' && (
               <Button 
                 type="primary" 
@@ -175,7 +170,6 @@ const fetchOrders = async () => {
               </Button>
             )}
 
-            {/* Jab tak order Deliver ya Cancel na ho jaye, Cancel ka button show hoga */}
             {currentStatus !== 'Delivered' && currentStatus !== 'Cancelled' && (
               <Button 
                 danger 
@@ -195,23 +189,21 @@ const fetchOrders = async () => {
 
   return (
     <AdminLayout>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', paddingBottom: '40px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', paddingBottom: '40px' }} className="container-fluid px-2 px-md-4">
+      
         <div style={{ 
           background: 'linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%)', 
-          padding: '25px 30px', 
+          padding: '20px', 
           borderRadius: '16px', 
           color: '#fff', 
-          marginBottom: '30px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          marginBottom: '20px',
           boxShadow: '0 10px 25px rgba(79, 70, 229, 0.15)'
-        }}>
+        }} className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
           <div>
-            <Title level={2} style={{ color: '#fff', margin: 0, display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <Title level={2} style={{ color: '#fff', margin: 0, display: 'flex', alignItems: 'center', gap: '10px', fontSize: 'clamp(1.2rem, 4vw, 2rem)' }}>
               <ShoppingCartOutlined /> Manage Customer Orders
             </Title>
-            <Text style={{ color: '#e0e7ff', fontSize: '15px' }}>
+            <Text style={{ color: '#e0e7ff', fontSize: 'clamp(13px, 2vw, 15px)' }}>
               Process, ship, deliver or cancel customer orders seamlessly.
             </Text>
           </div>
@@ -220,6 +212,7 @@ const fetchOrders = async () => {
             onClick={fetchOrders}
             size="large"
             style={{ fontWeight: '600', borderRadius: '10px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+            className="w-100 w-md-auto"
           >
             Refresh
           </Button>
@@ -235,8 +228,8 @@ const fetchOrders = async () => {
               dataSource={orders} 
               columns={columns} 
               rowKey="_id" 
-              pagination={{ pageSize: 7, showSizeChanger: false }}
-              scroll={{ x: 700 }}
+              pagination={{ pageSize: 7, showSizeChanger: false, responsive: true }}
+              scroll={{ x: 750 }}
             />
           )}
         </Card>
